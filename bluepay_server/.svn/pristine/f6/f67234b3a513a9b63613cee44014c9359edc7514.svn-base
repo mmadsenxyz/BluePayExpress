@@ -1,0 +1,52 @@
+
+
+form.mainform fieldset { margin-bottom: 10px; }
+	
+form.mainform legend {
+	padding: 0 2px;
+	font-weight: bold;
+	_margin: 0 -7px; /* IE Win */
+	}
+	
+form.mainform label {
+	display: inline-block;
+	line-height: 1.8;
+	vertical-align: top;
+	}
+	
+form.mainform fieldset ol {
+	margin: 0;
+	padding: 0;
+	}
+	
+form.mainform fieldset li {
+	list-style: none;
+	padding: 5px;
+	margin: 0;
+	}
+	
+form.mainform fieldset fieldset {
+	border: none;
+	margin: 3px 0 0;
+	}
+	
+form.mainform fieldset fieldset legend {
+	padding: 0 0 5px;
+	font-weight: normal;
+	}
+	
+form.mainform fieldset fieldset label {
+	display: block;
+	width: auto;
+	}
+
+form.mainform em {
+	font-weight: bold;
+	font-style: normal;
+	color: #000;
+	}
+
+form.mainform label { width: 120px; } /* Width of labels */
+form.mainform fieldset fieldset label { margin-left: 123px; } /* Width plus 3 (html space) */
+
+/*\*//*/ form.mainform legend { display: inline-block;} /* IE Mac legend fix */

@@ -1,0 +1,22 @@
+Bluepay Express enrollment plugin for Moodle
+Version 2.1
+
+www.starportmedia.com
+Mark V Madsen
+Copyright 2013
+GPL v3.0 (this is very stable software but always install at your own risk)
+
+
+INSTALLATION or UPGRADE NOTES :::::
+1. Unzip the BluepayEpress_v2.1 zip file.
+2. Remove the FOR-BLUEPAY-SERVER folder from the directory. (this is reserved for BluePay servers only)
+3. Upload the /bluepay folder onto your server inside the /moodle/enrol/ directory
+4. Backup your Moodle server database and put Moodle in Maintenance mode. 
+5. Go to the Moodle Notifications section and run the update to install or upgrade your Bluepay Express plugin
+
+~ The FOR-BLUEPAY-SERVER folder files need to be sent to Bluepay to put up on -their- server.
+You can email or also call their dev support.
+This is where the payment will be taking place and what user data variables you want to send into the payment system. Make sure to set your variables correctly in this file if you want to alter them and check with your enroll.html file to make sure they match the security strings in there as well.
+
+4. Contact Bluepay Dev support and tell them where your www.yourwebsite.com/moodle/enrol/bluepay/trans_notify.php file is located on your server so they can send final payment transaction data correctly back to your Moodle program. 
+This will either allow or deny entry into the class after viewing the defaultres1.php receipt file.

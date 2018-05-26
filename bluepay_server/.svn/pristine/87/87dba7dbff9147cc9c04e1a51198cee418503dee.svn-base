@@ -1,0 +1,44 @@
+
+form.mainform {
+	width: 370px;
+	font-size: 12px;
+	color: #333;
+        text-align: left;
+	border-color: #C5D9F1;
+	border-style: solid;
+	border-width: 2px;
+	}
+	
+form.mainform legend { 
+	padding-left: 0;
+	}
+	
+form.mainform legend,
+form.mainform label { color: #333; }
+
+form.mainform fieldset {
+	border: thin;
+	border-top: 1px solid #C9DCA6;
+	/*background: url(../images/blue_gradient2.gif);*/
+        background-size: 100%;
+	}
+	
+form.mainform fieldset fieldset {
+	}
+	
+form.mainform fieldset li {
+	padding: 5px 10px 7px;
+	}
+
+#CREDIT_INPUT ul li div.block-01 {
+	padding-right: 10px;
+	}
+
+#ACH_INPUT ul li div.block-01  {
+	padding-right: 10px;
+	}
+	
+#ACH_INPUT ul li div.block-02  {
+	vertical-align: middle;
+	}
+	

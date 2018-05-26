@@ -1,0 +1,125 @@
+<div align="center">
+
+<p><?php print_string("paymentrequired") ?></p>
+<p><b><?php echo $instancename; ?></b></p>
+<p><b><?php echo get_string("cost").": {$instance->currency} {$cost}"; ?></b></p>
+<p><img alt="<?php print_string('bluepayaccepted', 'enrol_bluepay') ?>" src="<?php echo "$CFG->wwwroot/enrol/bluepay/pix/bluepay_logo.jpg" ?>" /></p>
+<p><?php print_string("paymentinstant") ?></p>
+<?php 
+    $bluepayurl = empty($CFG->usebluepaysandbox) ? 'https://secure.bluepay.com/interfaces/shpf' : 'https://secure.bluepay.com/interfaces/shpf';
+    // read trans_notify.php file for more help on how to set this up with BluePay
+    $acctid = $this->get_config('bluepayacctid');
+    $mode = $this->get_config('mode');
+    $transtype = 'SALE';
+    $paymenttype = 'CREDIT';
+    $sequence = rand();
+    $tstamp = time();
+    $currency = $instance->currency;
+    $secret_key = $this->get_config('bluepaysecretkey');
+    $module_url = $this->get_config('moduleurl');
+    $store_name = 'Childrens Ministries Institute';
+    $rebilling = '0';
+    $custom_id = $course->id;
+    $custom_id2 = $USER->id;
+    $instance_id = $instance->id;
+    $discover_image = 'discvr.gif';
+    $amex_image = 'spacer.gif';
+    //$amex_image = 'amex.gif';
+    $shpf_form_id = 'cef01';
+    $shpf_form_id_return = 'defaultres1';
+    $custom_html = $coursefullname; 
+    $return_url = $module_url. '/return.php?id=' .$course->id;
+    $approved_url = $module_url. '/defaultres1/defaultres1.php';
+    $declined_url = $module_url. '/defaultres1/defaultres1.php';
+    $missing_url = $module_url. '/defaultres1/defaultres1.php';
+    
+$tps_def = 'MERCHANT MODE TRANSACTION_TYPE TPS_DEF AMOUNT INVOICE_ID REBILLING CUSTOM_ID CUSTOM_ID2';
+
+$tamperproofseal_string = $secret_key . $acctid . $mode . $transtype . $tps_def .$cost . $instance_id . $rebilling . $custom_id . $custom_id2;
+$tamperproofseal = bin2hex( md5($tamperproofseal_string, true) );
+    
+    // for testing purposes
+    //print "Tamperproof String: "  .$tamperproofseal_string. "<br><br>";
+    //print "Tamperproof Seal: "  .$tamperproofseal. "<br><br>";
+    
+$shpf_tps_def = 'SHPF_ACCOUNT_ID SHPF_FORM_ID DBA TAMPER_PROOF_SEAL AMEX_IMAGE DISCOVER_IMAGE TPS_DEF SHPF_TPS_DEF CUSTOM_HTML AMOUNT REBILLING CUSTOM_ID CUSTOM_ID2';
+    
+$shpf_tps_string = $secret_key . $acctid . $shpf_form_id . $store_name . $tamperproofseal . $amex_image . $discover_image . $tps_def . $shpf_tps_def . $custom_html . $cost . $rebilling . $custom_id . $custom_id2;
+
+$shpf_tps = bin2hex( md5($shpf_tps_string, true) );
+    
+    // for testing purposes
+    //print "SHPF String: "  .$shpf_tps_string. "<br><br>";
+    //print "SHPF Seal: "  .$shpf_tps. "<br>";
+  
+// if you would like to hoast your return/results page on the BluePay server you will need another layer of security. Usually not done.  
+//$shpf_tps_def_return = 'SHPF_ACCOUNT_ID SHPF_FORM_ID RETURN_URL DBA AMEX_IMAGE DISCOVER_IMAGE SHPF_TPS_DEF';
+
+//$shpf_tps_return_string = $secret_key . $acctid . $shpf_form_id_return . $return_url . $store_name . $amex_image . $discover_image . //$shpf_tps_def_return;
+
+//$shpf_tps_return = bin2hex( md5($shpf_tps_return_string, true) );
+    
+    //print "SHPF String for Return: "  .$shpf_tps_return_string. "<br><br>";
+    //print "SHPF Seal for Return: "  .$shpf_tps_return. "<br>";
+
+$redirect_url = $module_url. "/defaultres1/defaultres1.php?SHPF_FORM_ID=" . $shpf_form_id . "&amp;SHPF_ACCOUNT_ID=" . $acctid . "&amp;SHPF_TPS_DEF=" . $shpf_tps_def . "&amp;SHPF_TPS=" . $shpf_tps . "&amp;RETURN_URL=" . $return_url . "&amp;DBA=" . $store_name . "&amp;AMEX_IMAGE=" . $amex_image . "&amp;DISCOVER_IMAGE=" . $discover_image;
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+?>
+
+<form action="<?php echo $bluepayurl ?>" method="post">
+
+<input type="hidden" name="MODE" value="<?php p($mode) ?>" /> <!-- "LIVE" for real transaction -->
+<input type="hidden" name="SHPF_ACCOUNT_ID" value="<?php p($acctid) ?>" />
+<input type="hidden" name="MERCHANT" value="<?php p($acctid) ?>" />
+<input type="hidden" name="TRANSACTION_TYPE" value="<?php p($transtype) ?>" /> <!-- AUTH -->
+<input type="hidden" name="PAYMENT_TYPE" value="<?php p($paymenttype) ?>" />
+<input type="hidden" name="SHPF_FORM_ID" value="<?php p($shpf_form_id) ?>" />
+<input type="hidden" name="RESPONSEVERSION" value="3" />
+
+<input type="hidden" name="DBA" value="<?php p($store_name) ?>" />
+<input type="hidden" name="AMOUNT" value="<?php p($cost) ?>" />
+<input type="hidden" name="INVOICE_ID" value="<?php p($instance_id) ?>" />
+<!--<input type="hidden" name="ORDER_ID" value="<?php //p($instance_id) ?>" />-->
+
+<input type="hidden" name="REBILLING" value="<?php p($rebilling) ?>">
+<input type="hidden" name="REB_CYCLES" value="">
+<input type="hidden" name="REB_AMOUNT" value="">
+<input type="hidden" name="REB_EXPR" value="">
+<input type="hidden" name="REB_FIRST_DATE" value="">
+
+<input type="hidden" name="USER_ID" value="<?php p($USER->id) ?>" />
+<input type="hidden" name="NAME1" value="<?php p($userfirstname)?>" />
+<input type="hidden" name="NAME2" value="<?php p($userlastname)?>" />
+<input type="hidden" name="ADDR1" value="<?php p($useraddress) ?>" />
+<input type="hidden" name="CITY" value="<?php p($usercity) ?>" />
+<input type="hidden" name="EMAIL" value="<?php p($USER->email) ?>" />
+<input type="hidden" name="COUNTRY" value="<?php p($USER->country) ?>" />
+<input type="hidden" name="STATE" value="<?php p($USER->state) ?>" />
+<input type="hidden" name="ZIPCODE" value="<?php p($USER->zipcode) ?>" />
+<input type="hidden" name="PHONE" value="<?php p($USER->phone) ?>" />
+
+<input type="hidden" name="AMEX_IMAGE" value="<?php p($amex_image) ?>">
+<input type="hidden" name="DISCOVER_IMAGE" value="<?php p($discover_image) ?>">
+<input type="hidden" name="CUSTOM_HTML" value="<?php p($custom_html) ?>">
+<input type="hidden" name="CUSTOM_ID" value="<?php p($custom_id) ?>">
+<input type="hidden" name="CUSTOM_ID2" value="<?php p($custom_id2) ?>">
+   
+<input type="hidden" name="APPROVED_URL" value="<?php p($approved_url) ?>">
+<input type="hidden" name="DECLINED_URL" value="<?php p($declined_url) ?>">
+<input type="hidden" name="MISSING_URL" value="<?php p($missing_url) ?>">
+<input type="hidden" name="REDIRECT_URL" value="<?php p($redirect_url) ?>">
+
+<input type="hidden" name="TPS_DEF" value="<?php p($tps_def) ?>" />
+<!-- TAMPER_PROOF_SEAL = MD5 of the secret key plus values of the fields listed in TPS_DEF in that order -->
+<input type="hidden" name="TAMPER_PROOF_SEAL" value="<?php p($tamperproofseal) ?>" />
+
+<input type="hidden" name="SHPF_TPS_DEF" value="<?php p($shpf_tps_def) ?>" />
+<!-- SHPF_TPS = MD5 of the secret key plus values of the fields listed in SHPF_TPS_DEF in that order -->
+<input type="hidden" name="SHPF_TPS" value="<?php p($shpf_tps) ?>" />
+
+<input type="submit" value="<?php print_string("sendpaymentbutton", "enrol_bluepay") ?>" />
+
+</form>
+
+</div>

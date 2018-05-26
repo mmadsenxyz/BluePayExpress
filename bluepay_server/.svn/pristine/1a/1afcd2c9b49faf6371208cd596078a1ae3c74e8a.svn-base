@@ -1,0 +1,17 @@
+
+body {
+	padding: 0px;
+        text-align: center;
+	font: normal 80.5% "Trebuchet MS", Helvetica, Verdana, Arial;
+	}
+	
+p { margin: 0 5px; }
+	
+.sr {
+	position: absolute;
+	left: -9999em;
+	top: 0;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	}

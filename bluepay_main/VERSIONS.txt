@@ -1,0 +1,21 @@
+Moodle Bluepay Express enrollment plugin
+
+www.starportmedia.com
+Mark V Madsen
+Copyright 2013
+GPL v3.0 (this is very stable software but always install at your own risk)
+
+UPRADE NOTES :::
+
+v 2.2 BETA
+— Testing new payments form and receipt form 
+
+v 2.1
+
+-- More options in control panel to control your Module URL and also Account, Key, and Mode information without having to alter any of this in program.
+
+-- We now have the Default Results (Return Receipt) method for sending data to your trans_notify.php file working.
+This allows instant class entry into Moodle if payment has been Authorized and accepted by Bluepay, rather then having to wait for their slower TRANS NOTIFY method.
+
+-- Next version should have both methods (TRANS NOTIFY and Return Receipt) working with ability to switch preference between the two.
+

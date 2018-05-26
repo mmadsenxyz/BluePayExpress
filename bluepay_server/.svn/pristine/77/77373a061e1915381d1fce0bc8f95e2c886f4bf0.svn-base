@@ -1,0 +1,210 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" media="screen" href="${SHPF_STATIC_PATH}css/style3.css" />
+        <script type="text/javascript">
+            function DisplayPayType(PayType) {
+                obj_CREDIT=(document.all) ? document.all.CREDIT_INPUT : document.getElementById('CREDIT_INPUT');
+                obj_ACH=(document.all) ? document.all.ACH_INPUT : document.getElementById('ACH_INPUT');
+
+                if (PayType == 'ACH') {
+                    obj_CREDIT.style.display = "none";
+                    obj_ACH.style.display = "block";
+                } else {
+                    obj_CREDIT.style.display = "block";
+                    obj_ACH.style.display = "none";
+                }
+            }
+	    function DisplayOtherStateBox() {
+                obj_PROVINCE_Label = (document.all) ? document.all.PROVINCE_label : document.getElementById('PROVINCE_label');
+		obj_PROVINCE_Label.style.display = "inline-block";
+		obj_PROVINCE_Input = (document.all) ? document.all.PROVINCE_input : document.getElementById('PROVINCE_input');
+		obj_PROVINCE_Input.style.display = "inline-block";
+		obj_PROVINCE_List = (document.all) ? document.all.PROVINCE_list : document.getElementById('PROVINCE_list');
+		obj_PROVINCE_List.style.display = "block";
+            }
+        </script>
+	<script src="${SHPF_STATIC_PATH}scripts/head.js"></script>
+    </head>
+    <body onload="DisplayPayType('CREDIT')">
+        <center>
+	    <table bgcolor="#ac003e" style="height: 5px; width: 100%;">
+		<tr>
+		    <td bgcolor="#ac003e">
+		    </td>
+		</tr>
+	    </table>
+	    <table bgcolor="#F4F4F4" width="100%" style="border-bottom: 1px solid #E8E8E8;">
+		<tr>
+		    <td bgcolor="#F4F4F4">
+			<img width="100%" style="margin-bottom: 5px;" border="0" alt="" src="${SHPF_STATIC_PATH}images/CEF_ELearning.jpg">
+		    </td>
+		</tr>
+	    </table>  
+            <form name="mainform" class="mainform" action="https://secure.bluepay.com/interfaces/bp10emu" method="POST">
+                <input type=hidden name=MERCHANT          value="${SHPF_ACCOUNT_ID}">
+				<input type=hidden name=INVOICE_ID        value="${INVOICE_ID}">
+                <input type=hidden name=AMOUNT            value="${AMOUNT}">
+                <input type=hidden name=TRANSACTION_TYPE  value="${TRANSACTION_TYPE}">
+                <input type=hidden name=TAMPER_PROOF_SEAL value="${TAMPER_PROOF_SEAL}">
+                <input type=hidden name=APPROVED_URL      value="${REDIRECT_URL}">
+                <input type=hidden name=DECLINED_URL      value="${REDIRECT_URL}">
+                <input type=hidden name=MISSING_URL       value="${REDIRECT_URL}">
+                <input type=hidden name=CUSTOM_ID         value="${CUSTOM_ID}">
+                <input type=hidden name=CUSTOM_ID2        value="${CUSTOM_ID2}">
+		<input type=hidden name=RESPONSEVERSION   value="${RESPONSEVERSION}">    
+				<input type=hidden name=COMMENT           value="${COMMENT}">
+                <input type=hidden name=MODE              value="${MODE}">
+                <input type=hidden name=REBILLING         value="${REBILLING}">
+                <input type=hidden name=REB_CYCLES        value="${REB_CYCLES}">
+                <input type=hidden name=REB_AMOUNT        value="${REB_AMOUNT}">
+                <input type=hidden name=REB_EXPR          value="${REB_EXPR}">
+                <input type=hidden name=REB_FIRST_DATE    value="${REB_FIRST_DATE}">
+                <input type=hidden name=TPS_DEF           value="${TPS_DEF}">
+                <fieldset>
+                    <!--<legend>Payment Information</legend>-->
+                    <ol id="ORDER_FORM">
+                        <li>&nbsp;<br><div class="block-01"><label for="DBA">Service</label></div><div class="block-02"><p style="padding: .35em; font-weight: bold;">${DBA}</p></div></li>
+			<p style="padding: 15px; font-size: 12px; color: #0080ff;"><i>* Please Note: Your billing address, phone number, and zip must match the billing information on file with your bank. If the correct information is not used, your transaction may not go through.</i></p>
+			<li>&nbsp;<div class="block-01"><label for="CUSTOM_HTML">Course Name</label></div><div class="block-02"><p style="padding: .35em; font-weight: bold;">${CUSTOM_HTML}</p></div></li>
+			<li>&nbsp;<div class="block-01"><label for="AMOUNT">Cost</label></div><div class="block-02"><p style="padding: .35em; font-weight: bold;">$ ${AMOUNT}</p></div></li>
+                        <li><div class="block-01"><label for="NAME1">First Name</label></div><div class="block-02">       <input type="text" name="NAME1"     id="NAME1"   value="${NAME1}" class="required" /></div></li>
+                        <li><div class="block-01"><label for="NAME2">Last Name</label></div><div class="block-02">        <input type="text" name="NAME2"     id="NAME2"   value="${NAME2}" class="required" /></div></li>
+                        <li><div class="block-01"><label for="ADDR1">Billing Address 1</label></div><div class="block-02"> <input type="text" name="ADDR1"     id="ADDR1"   value="${ADDR1}" class="required" /></div></li>
+                        <li><div class="block-01"><label for="ADDR2">Billing Address 2</label></div><div class="block-02"> <input type="text" name="ADDR2"     id="ADDR2"   value="${ADDR2}" class="required" /></div></li>
+                        <li><div class="block-01"><label for="CITY">City</label></div><div class="block-02">              <input type="text" name="CITY"      id="CITY"    value="${CITY}" class="required"/></li>
+                        <li><div class="block-01"><label for="STATE">State/Province</label></div><div class="block-02">
+			<select name="STATE" class="required">
+                                        <option value="" SELECTED>--State--</option>
+                                        <option value="${STATE}">Alabama</option>
+					<option value="${STATE}">Alaska</option>
+					<option value="${STATE}">Arizona</option>
+					<option value="${STATE}">Arkansas</option>
+					<option value="${STATE}">California</option>
+					<option value="${STATE}">Colorado</option>
+					<option value="${STATE}">Connecticut</option>
+					<option value="${STATE}">Delaware</option>
+					<option value="${STATE}">District of Columbia</option>
+					<option value="${STATE}">Florida</option>
+					<option value="${STATE}">Georgia</option>
+					<option value="${STATE}">Hawaii</option>
+					<option value="${STATE}">Idaho</option>
+					<option value="${STATE}">Illinois</option>
+					<option value="${STATE}">Indiana</option>
+					<option value="${STATE}">Iowa</option>
+					<option value="${STATE}">Kansas</option>
+					<option value="${STATE}">Kentucky</option>
+					<option value="${STATE}">Louisiana</option>
+					<option value="${STATE}">Maine</option>
+					<option value="${STATE}">Maryland</option>
+					<option value="${STATE}">Massachusetts</option>
+					<option value="${STATE}">Michigan</option>
+					<option value="${STATE}">Minnesota</option>
+					<option value="${STATE}">Mississippi</option>
+					<option value="${STATE}">Missouri</option>
+					<option value="${STATE}">Montana</option>
+					<option value="${STATE}">Nebraska</option>
+					<option value="${STATE}">Nevada</option>
+					<option value="${STATE}">New Hampshire</option>
+					<option value="${STATE}">New Jersey</option>
+					<option value="${STATE}">New Mexico</option>
+					<option value="${STATE}">New York</option>
+					<option value="${STATE}">North Carolina</option>
+					<option value="${STATE}">North Dakota</option>
+					<option value="${STATE}">Ohio</option>
+					<option value="${STATE}">Oklahoma</option>
+					<option value="${STATE}">Oregon</option>
+					<option value="${STATE}">Pennsylvania</option>
+					<option value="${STATE}">Rhode Island</option>
+					<option value="${STATE}">South Carolina</option>
+					<option value="${STATE}">South Dakota</option>
+					<option value="${STATE}">Tennessee</option>
+					<option value="${STATE}">Texas</option>
+					<option value="${STATE}">Utah</option>
+					<option value="${STATE}">Vermont</option>
+					<option value="${STATE}">Virginia</option>
+					<option value="${STATE}">Washington</option>
+					<option value="${STATE}">West Virginia</option>
+					<option value="${STATE}">Wisconsin</option>
+					<option value="${STATE}">Wyoming</option>
+                                        <option value="" onclick="DisplayOtherStateBox()">Outside the U.S.</option>
+                                    </select></div></li>
+			<li id="PROVINCE_list" style="display: none;"><div class="block-01"><label style="display: none;" for="STATE" id="PROVINCE_label">Other State/Province</label></div><div class="block-02"> <input style="display: none;" type="text" name="STATE2" id="PROVINCE_input" value="${STATE}" /></div></li>
+			<li><div class="block-01"><label for="ZIPCODE">Postal Code</label></div><div class="block-02">    <input type="text" name="ZIPCODE"   id="ZIPCODE" value="${ZIPCODE}" class="required"/></div></li>
+                        <li><div class="block-01"><label for="COUNTRY">Country</label></div><div class="block-02">    <input type="text" name="COUNTRY"   id="COUNTRY" value="${COUNTRY}" class="required" /></div></li>
+                        <li><div class="block-01"><label for="PHONE">Phone</label></div><div class="block-02">            <input type="text" name="PHONE"     id="PHONE"   value="${PHONE}" /></div></li>
+                        <li><div class="block-01"><label for="EMAIL">Email</label></div><div class="block-02">            <input type="text" name="EMAIL"     id="EMAIL"   value="${EMAIL}" class="required" /></div></li>
+                        <li><div class="block-01"><label for="PAYMENT_TYPE">Payment Type</label></div><div class="block-02"><input type="radio" name="PAYMENT_TYPE" value="CREDIT" checked onclick="DisplayPayType('CREDIT')" class="required" /> Credit Card or <br /><input type="radio" name="PAYMENT_TYPE" value="ACH" onclick="DisplayPayType('ACH')"> Electronic Check</div></li>
+                        <li id="CREDIT_INPUT">
+                            <ul>
+                                <li>
+				    <div class="block-01-push">
+					    <div style="background-position: 0px 0px;" class="icons vi-mc-di-am" data-credit-card-type=""></div>						
+				    </div>
+				</li>
+                                <li><div class="block-01"><label for="CC_NUM">Credit Card Number</label></div><div class="block-02"><input type="text" autocomplete="off"  name="CC_NUM" class="required creditcard" autocomplete="off" data-credit-card-number="" /></div></li>
+                                <li><div id="cvc" class="block-01 "><label for="CVCCVV2">CVV2</label><span>
+				    <img width="150px" src="${SHPF_STATIC_PATH}images/back-cc.jpg">
+				    <br>
+				    <img class="callout" src="${SHPF_STATIC_PATH}images/callout.gif">
+				    <strong>For Visa, Mastercard, or Discover, this is the 3-digit code on the reverse side of your card.</strong>
+				    </span>
+				</div>
+				    <div class="block-02"><input type="text" autocomplete="off"  name="CVCCVV2" /></div></li>
+				<li><div class="block-01">
+                                    <label for="CC_EXPIRES">Expiration Date</label></div>
+				    <div class="block-02">
+                                    <select name="CC_EXPIRES_MONTH" >
+                                        <option value="" SELECTED>Month</option>
+                                        <option value="01">01</option>
+                                        <option value="02">02</option>
+                                        <option value="03">03</option>
+                                        <option value="04">04</option>
+                                        <option value="05">05</option>
+                                        <option value="06">06</option>
+                                        <option value="07">07</option>
+                                        <option value="08">08</option>
+                                        <option value="09">09</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                    </select> / <select name="CC_EXPIRES_YEAR">
+                                        <option value="" SELECTED>Year</option>
+                                        <option value="12">2012</option>
+                                        <option value="13">2013</option>
+                                        <option value="14">2014</option>
+                                        <option value="15">2015</option>
+                                        <option value="16">2016</option>
+                                        <option value="17">2017</option>
+                                        <option value="18">2018</option>
+                                        <option value="19">2019</option>
+                                        <option value="20">2020</option>
+                                        <option value="21">2021</option>
+                                        <option value="22">2022</option>
+                                    </select>
+				    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li id="ACH_INPUT">
+                            <ul>
+                                <li><div class="block-01"><label for="ACH_ROUTING">Routing Number</label></div><div class="block-02"><input type="text" input autocomplete="off"  name="ACH_ROUTING" size="9" maxlength="9" /></div></li>
+                                <li><div class="block-01"><label for="ACH_ACCOUNT">Bank Account Number</label></div><div class="block-02"><input type="text" input autocomplete="off"  name="ACH_ACCOUNT" /></div></li>
+                                <li><div class="block-01"><label for="ACH_ACCOUNT_TYPE">Bank Account Type</label></div><div class="block-02"><input type="radio" name="ACH_ACCOUNT_TYPE" value="C" checked> Checking or <br /><input type="radio" name="ACH_ACCOUNT_TYPE" value="S"> Savings</div></li>
+                                <input type="HIDDEN" name="DOC_TYPE" value="WEB">
+                            </ul>
+                        </li>
+                    </ol>
+		    <div style="text-align: center">
+			    <input class="button--primary" value="Submit Secure Payment" type="submit">
+			    <input value="Reset" class="button" type="reset">
+			<br /><br /><a href="http://www.bluepay.com" target="_new"><img width="100px" src="${SHPF_STATIC_PATH}images/BluePay.jpg" border="0"></a>
+		    </p>
+		    <br><b><center>PCI Compliant payment system</center></b>
+                </fieldset>
+            </form>
+        </center>
+	<script src="${SHPF_STATIC_PATH}scripts/main.js"></script>	
+    </body>		
+</html>

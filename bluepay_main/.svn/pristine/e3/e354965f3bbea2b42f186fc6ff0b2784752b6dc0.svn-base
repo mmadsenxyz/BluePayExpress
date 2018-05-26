@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="enrol/bluepay/db" VERSION="20100716" COMMENT="XMLDB file for Moodle enrol/bluepay"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="enrol_bluepay" COMMENT="Holds all known information about BluePay Express transactions">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="trans_id"/>
+        <FIELD NAME="trans_id" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="id" NEXT="item_name"/>
+        <FIELD NAME="item_name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="trans_id" NEXT="courseid"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="item_name" NEXT="userid"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="courseid" NEXT="instanceid"/>
+        <FIELD NAME="instanceid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="userid" NEXT="memo"/>
+        <FIELD NAME="memo" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="instanceid" NEXT="trans_status"/>
+        <FIELD NAME="trans_status" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="memo" NEXT="avs_description"/>
+        <FIELD NAME="avs_description" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="trans_status" NEXT="avs_code"/>
+        <FIELD NAME="avs_code" TYPE="char" LENGTH="30" NOTNULL="true" SEQUENCE="false" PREVIOUS="avs_description" NEXT="payment_type"/>
+        <FIELD NAME="payment_type" TYPE="char" LENGTH="30" NOTNULL="true" SEQUENCE="false" PREVIOUS="avs_code" NEXT="timeupdated"/>
+        <FIELD NAME="timeupdated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="payment_type"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>
